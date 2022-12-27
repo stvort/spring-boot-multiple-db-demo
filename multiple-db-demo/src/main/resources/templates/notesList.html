@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Notes web-app</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+
+        .table {
+            border: 1px solid steelblue;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .table td:nth-child(0) {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+<h3>Новая заметка:</h3>
+
+<form id="edit-form" th:action="@{/}" th:method="post">
+    <div class="row">
+        <label for="user-name-input">Имя автора:</label>
+        <input id="user-name-input" name="userName" type="text" value="Вася"/>
+    </div>
+
+    <div class="row">
+        <label for="user-login-input">Логин автора:</label>
+        <input id="user-login-input" name="userLogin" type="text"value="vasya"/>
+    </div>
+
+    <div class="row">
+        <label for="note-title-input">Заголовок заметки:</label>
+        <input id="note-title-input" name="title" type="text" value="Новая заметка"/>
+    </div>
+
+    <div class="row">
+        <label for="note-text-input">Заголовок заметки:</label>
+        <textarea id="note-text-input" name="text">Текст новой заметки</textarea>
+    </div>
+
+    <div class="row">
+        <button type="submit">Сохранить</button>
+    </div>
+</form>
+
+<h3>Заметки:</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Автор</th>
+        <th>Заголовок</th>
+        <th>Текс</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="note : ${notes}" th:object="${note}">
+        <td th:text="*{id}">0</td>
+        <td th:text="*{user.name} + '(' + *{user.login} + ')'">NoValue</td>
+        <td th:text="*{title}">NoValue</td>
+        <td th:text="*{text}">NoValue</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Юзеры:</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Логин</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}" th:object="${user}">
+        <td th:text="*{id}">0</td>
+        <td th:text="*{name}">NoValue</td>
+        <td th:text="*{login}">NoValue</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
